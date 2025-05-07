@@ -24,9 +24,9 @@ bDeg: direction from point b
 ```
 
 ### Functions
-`render.BZC_ANY(a, b, aDeg, bDeg)`: Curve begin and end with any degree.
-`render.BZC_S(a, b, mainX)`: Curve from a to b. `mainX=True` means the curve goes mainly on x-axis, while offset will happen on z-axis.
-`render.BZC_R(a, b, xFirst)`: Curve from a to b. `xFirst=True` means the curve goes first on x-axis, before truning to z-axis.
+- `render.BZC_ANY(a, b, aDeg, bDeg)`: Curve begin and end with any degree.
+- `render.BZC_S(a, b, mainX)`: Curve from a to b. `mainX=True` means the curve goes mainly on x-axis, while offset will happen on z-axis.
+- `render.BZC_R(a, b, xFirst)`: Curve from a to b. `xFirst=True` means the curve goes first on x-axis, before truning to z-axis.
 
 ### In Minecraft
 > Put the generated `.mcfunction` file in `WORLD\datapacks\AutoBuilder\data\builder\function`, for example.
