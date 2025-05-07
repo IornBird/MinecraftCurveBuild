@@ -31,7 +31,8 @@ bDeg: direction from point b
 ### In Minecraft
 > Put the generated `.mcfunction` file in `WORLD\datapacks\AutoBuilder\data\builder\function`, for example.
 > > replace `WORLD` to your Minecraft world folder.
-> > **IMPORTANT** Ensure your datapack has correct structure of your game version.
+> > 
+> > **IMPORTANT**: Ensure your datapack has correct structure of your game version.
 >
 > Turn on Minecraft. Put a armor stand on the begin position (press F3 to check), and add tag `build` by typing
 > ```minecraft_function
@@ -41,3 +42,4 @@ bDeg: direction from point b
 > ```minecraft_function
 > /function builder:main
 > ```
+> the tag `build` will be removed after the function finished expectionally.
