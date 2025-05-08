@@ -2,8 +2,8 @@
 A program allows you build a Bézier curve in Minecraft
 ---
 ### What it does
-Given to points a and b, it will generate a minecraft function file allows player build a Bézier curve.
-It's for Java edition, and uncertain to use it for Bedrock edition
+Given two points `a` and `b`, it will generate a minecraft function file allowing player build a Bézier curve.
+It's for Java edition, and is uncertain to be working in Bedrock edition
 
 ## Usage
 It's for personal use, so it's difficult to use it.
@@ -24,9 +24,9 @@ bDeg: direction from point b
 ```
 
 ### Functions
-- `render.BZC_ANY(a, b, aDeg, bDeg)`: Curve begin and end with any degree.
-- `render.BZC_S(a, b, mainX)`: Curve from a to b. `mainX=True` means the curve goes mainly on x-axis, while offset will happen on z-axis.
-- `render.BZC_R(a, b, xFirst)`: Curve from a to b. `xFirst=True` means the curve goes first on x-axis, before truning to z-axis.
+- `render.BZC_ANY(a, b, aDeg, bDeg)`: Curve begins and ends with any given degrees.
+- `render.BZC_S(a, b, mainX)`: Curve from a to b. `mainX=True` means the curve goes mainly on x-axis direction, while offset will happen on z-axis direction.
+- `render.BZC_R(a, b, xFirst)`: Curve from a to b. `xFirst=True` means the curve goes first on x-axis direction, before truning to z-axis direction.
 
 ### In Minecraft
 > Put the generated `.mcfunction` file in `WORLD\datapacks\AutoBuilder\data\builder\function`, for example.
