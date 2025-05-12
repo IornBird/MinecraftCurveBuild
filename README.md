@@ -3,19 +3,26 @@ A program allows you build a Bézier curve in Minecraft
 ---
 ### What it does
 Given two points `a` and `b`, it will generate a minecraft function file allowing player build a Bézier curve.
-It's for Java edition, and is uncertain to be working in Bedrock edition
+
+**It's for Java edition, and is uncertain to be working in Bedrock edition.**
+
+![](https://github.com/IornBird/MinecraftCurveBuild/blob/main/Minecraft%20Curve%20Builder.png?raw=true)
 
 ## Usage
+
+See [this video](https://drive.google.com/file/d/14HHKU0-pFo-eHqpVhqnCLRPQWC_eKNtd/view) to understand easier.
+
 It's for personal use, so it's difficult to use it.
 ### Launch
 Turn on cmd or any similar program, input:
 ```cmd
-python buildMain.py 1 > main.mcfunction
+buildMain.py > main.mcfunction
 ```
-You can replace `1` to anything, since it doesn't matters.
+You can replace `main` to another name, but it must be consisted of lowercase or dash (`_`).
 
 ### Arguments
 Please open `buildMain.py`. adjusting following variables in `main()`
+You can press F3 to find related information.
 ```
 a: begin of the curve
 b: end of the curve
@@ -29,17 +36,18 @@ bDeg: direction from point b
 - `render.BZC_R(a, b, xFirst)`: Curve from a to b. `xFirst=True` means the curve goes first on x-axis direction, before truning to z-axis direction.
 
 ### In Minecraft
-> Put the generated `.mcfunction` file in `WORLD\datapacks\AutoBuilder\data\builder\function`, for example.
-> > replace `WORLD` to your Minecraft world folder.
-> > 
-> > **IMPORTANT**: Ensure your datapack has correct structure of your game version.
->
-> Turn on Minecraft. Put a armor stand on the begin position (press F3 to check), and add tag `build` by typing
-> ```minecraft_function
-> /tag @e[type=minecraft:armor_stand,distance=..2] add build
-> ```
-> Stand between begin and end position if two points are far. Run the function (assume it's `main.mcfunction`) you put into datapack.
-> ```minecraft_function
-> /function builder:main
-> ```
-> the tag `build` will be removed after the function finished expectionally.
+Put the generated `.mcfunction` file in `WORLD\datapacks\AutoBuilder\data\builder\function`, for example.
+> replace `WORLD` to your Minecraft world folder.
+> 
+> **IMPORTANT**: Ensure your datapack (Assume `AutoBuilder` here) has correct structure of your game version.
+
+Turn on Minecraft. Put a armor stand on the begin position, and add tag `build` by typing
+```minecraft_function
+/tag @e[type=minecraft:armor_stand,distance=..2] add build
+```
+Ensure that both begin and end position are loaded. To ensure this, you can stand between begin and end position.
+Run the function (assume it's `main.mcfunction`) you put into datapack.
+```minecraft_function
+/function builder:main
+```
+The tag `build` on the armor stand will be removed after the function finished expectionally.
