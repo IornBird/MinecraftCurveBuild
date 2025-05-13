@@ -22,13 +22,15 @@ You can replace `main` to another name, but it must be consisted of lowercase or
 
 ### Arguments
 Please open `buildMain.py`. adjusting following variables in `main()`
-You can press F3 to find related information.
 ```
-a: begin of the curve
-b: end of the curve
+a: begin point of the curve
+b: end point of the curve
 aDeg: direction from point a
 bDeg: direction from point b
 ```
+You can press F3 in Minecraft to find:
+- position in `Block:`
+- direction in `Facing:` (at the end of this line, for example: `90` in `Facing: west (Towards negetive X) (90.0 / 0.0)`)
 
 ### Functions
 - `render.BZC_ANY(a, b, aDeg, bDeg)`: Curve begins and ends with any given degrees.
@@ -45,7 +47,10 @@ Turn on Minecraft. Put a armor stand on the begin position, and add tag `build` 
 ```minecraft_function
 /tag @e[type=minecraft:armor_stand,distance=..2] add build
 ```
+**IMPORTANT**: Ensure there's only one armor stand having tag `build`.
+
 Ensure that both begin and end position are loaded. To ensure this, you can stand between begin and end position.
+
 Run the function (assume it's `main.mcfunction`) you put into datapack.
 ```minecraft_function
 /function builder:main
