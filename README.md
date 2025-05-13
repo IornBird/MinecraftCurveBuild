@@ -4,7 +4,7 @@ A program allows you build a Bézier curve in Minecraft
 ### What it does
 Given two points `a` and `b`, it will generate a minecraft function file allowing player build a Bézier curve.
 
-**It's for Java edition, and is uncertain to be working in Bedrock edition.**
+**It's for Java edition 1.21.X, and is uncertain to be working in other versions or Bedrock edition.**
 
 ![](https://github.com/IornBird/MinecraftCurveBuild/blob/main/Minecraft%20Curve%20Builder.png?raw=true)
 
@@ -18,7 +18,7 @@ Turn on cmd or any similar program, input:
 ```cmd
 buildMain.py > main.mcfunction
 ```
-You can replace `main` to another name, but it must be consisted of lowercase or dash (`_`).
+You can replace `main` to another name, but it must be consisted of lowercase or underline (`_`). (For expamle: `my_function`.)
 
 ### Arguments
 Please open `buildMain.py`. adjusting following variables in `main()`
@@ -39,7 +39,7 @@ bDeg: direction from point b
 Put the generated `.mcfunction` file in `WORLD\datapacks\AutoBuilder\data\builder\function`, for example.
 > replace `WORLD` to your Minecraft world folder.
 > 
-> **IMPORTANT**: Ensure your datapack (Assume `AutoBuilder` here) has correct structure of your game version.
+> **IMPORTANT**: Ensure your datapack (assume its `AutoBuilder`) has correct structure of your game version.
 
 Turn on Minecraft. Put a armor stand on the begin position, and add tag `build` by typing
 ```minecraft_function
