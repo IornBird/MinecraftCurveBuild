@@ -18,7 +18,8 @@ Turn on cmd or any similar program, input:
 ```cmd
 buildMain.py > main.mcfunction
 ```
-You can replace `main` to another name, but it must be consisted of lowercase or underline (`_`). (For expamle: `my_function`.)
+You can replace `main` to another name, but it must be consisted of lowercase or underline (`_`).
+- For expamle: `my_function`.
 
 ### Arguments
 Please open `buildMain.py`. adjusting following variables in `main()`
@@ -31,6 +32,14 @@ bDeg: direction from point b
 You can press F3 in Minecraft to find:
 - position in `Block:`
 - direction in `Facing:` (at the end of this line, for example: `90` in `Facing: west (Towards negetive X) (90.0 / 0.0)`)
+
+Also, you can specify follwoing block types in `main()`
+```
+block_for_ground: block used for generate ground
+block_under_rail: block user to put in center
+```
+If you want to build it for [high-speed rail system by flashteens](https://github.com/flashteens/FTMCRailBuilder13):
+- you may set `place_arrow` to True to handle faster bulletcart.
 
 ### Functions
 - `render.BZC_ANY(a, b, aDeg, bDeg)`: Curve begins and ends with any given degrees.
