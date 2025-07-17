@@ -13,16 +13,17 @@ def get45BzPoints(R=128):
 
 def main():
     # x, y = get45BzPoints(128)  # around (91, 38)
-    a = [458, -145]
-    b = [484, -280]
+    a = [0, 0]
+    b = [50, 50]
     aDeg = -90
-    bDeg = 45
+    bDeg = 0
 
     dots = render.BZC_ANY(a, b, aDeg, bDeg)
     # dots = render.BZC_R(a, b, xFirst=True)
     # dots = render.BZC_S(a, b, mainX=False)
     # print(dots)
-    generator.putCmdSingle(dots)
+
+    generator.putCmdSingle(dots, "quartz_block", "diorite", True)
 
 def mainHeight():
     L = [round(-15 * (c - 1) / 23 + 85 - 70) for c in range(25)]
