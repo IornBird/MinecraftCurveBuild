@@ -165,7 +165,7 @@ class Coord:
         )
 
 
-def digSingle(length: int, mainX: bool, gBlock, rBlock, arrow=False, r=1, h=2):
+def digSingle(length: int, mainX: bool, gBlock, rBlock, rail=True, arrow=False, r=1, h=2):
     """
     print multiple fill command for part of curve for railway
     """
@@ -197,9 +197,12 @@ def digSingle(length: int, mainX: bool, gBlock, rBlock, arrow=False, r=1, h=2):
     coord.setHeight(-1, -1)
     underRail = fillRelative(*coord.getOrgCoord(), block=rBlock)
     coord.setHeight(0, 0)
-    rail = fillRelative(*coord.getOrgCoord(), block="rail")
+    if rail:
+        railCmd = fillRelative(*coord.getOrgCoord(), block="rail")
 
-    args = [ceil, dig, ground, underRail, rail]
+    args = [ceil, dig, ground, underRail]
+    if rail:
+        args.append(railCmd)
     print(*args, sep='\n')
 
 
@@ -262,8 +265,16 @@ class CommandGenerator:
 
 
 class RailwayBuilder:
-    def __init__(self, command_generator: CommandGenerator, width: int = 1, height: int = 2):
+    def __init__(self, command_generator: CommandGenerator,
+                 ground_block: str, rail_block: str,
+                 place_rail: bool = True,
+                 place_arrow: bool = False,
+                 width: int = 1, height: int = 2):
         self.cmd_gen = command_generator
+        self.gBlock = ground_block
+        self.rBlock = rail_block
+        self.place_arrow = place_arrow
+        self.place_rail = place_rail
         self.width = width
         self.height = height
 
@@ -353,19 +364,17 @@ class RailwayBuilder:
         return cmds
 
     # public
-    def build_railway_segment(self, length: int, mainX: bool,
-                              ground_block: str, rail_block: str,
-                              place_arrow: bool = False,
-                              width=1, height=2) -> list[str]:
+    def build_railway_segment(self, length: int, mainX: bool) -> list[str]:
         one = toPN(length >= 0)
-        coords = CoordinateCalculator(length, mainX, width, height)
+        coords = CoordinateCalculator(length, mainX, self.width, self.height)
         cmds = self.generate_ceiling_commands(coords)
         cmds.extend(self.generate_dig_commands(coords))
-        if place_arrow:
+        if self.place_arrow:
             cmds.extend(self.generate_arrow_command(coords, (one, 0) if mainX else (0, one)))
         else:
-            cmds.extend(self.generate_ground_commands(coords, ground_block))
-        cmds.extend(self.generate_rail_commands(coords, rail_block))
+            cmds.extend(self.generate_ground_commands(coords, self.gBlock))
+        if self.place_rail:
+            cmds.extend(self.generate_rail_commands(coords, self.rBlock))
         return cmds
 
 
@@ -385,7 +394,7 @@ def putCmd(Ls: tuple[dict, list], r=1, h=2):
     print("tag @e[type=armor_stand, tag=build, sort=nearest] remove build")
 
 
-def putCmdSingle(Ls: tuple[dict, list], gBlock, rBlock, placeArrow=False, r=1, h=3):
+def putCmdSingle(Ls: tuple[dict, list], gBlock, rBlock, placeRail=True, placeArrow=False, r=1, h=3):
     """
     main function to print mcfunction file building known curve
     the curve is for signal rail
@@ -397,12 +406,12 @@ def putCmdSingle(Ls: tuple[dict, list], gBlock, rBlock, placeArrow=False, r=1, h
         raise Exception("Required commands are too many")
     for c in L:
         mainX = (c[0] != 0)
-        digSingle(c[not mainX], mainX, gBlock, rBlock, placeArrow, r, h)
+        digSingle(c[not mainX], mainX, gBlock, rBlock, placeRail, placeArrow, r, h)
         print(base + f" tp ~{c[0]} ~ ~{c[1]}")
     print(f"tag {entity} remove build")
 
 
-def putCmdSingleNew(Ls: tuple[dict, list], gBlock, rBlock, placeArrow=False, r=1, h=3):
+def putCmdSingleNew(Ls: tuple[dict, list], gBlock, rBlock, placeRail=True, placeArrow=False, r=1, h=3):
     """
     organized version
     main function to print mcfunction file building known curve
@@ -413,10 +422,10 @@ def putCmdSingleNew(Ls: tuple[dict, list], gBlock, rBlock, placeArrow=False, r=1
     if len(L) >= 2048:
         raise Exception("Required commands are too many")
     entity = "@e[type=armor_stand, tag=build, sort=nearest]"
-    builder = RailwayBuilder(CommandGenerator(entity))
+    builder = RailwayBuilder(CommandGenerator(entity), gBlock, rBlock, placeRail, placeArrow, r, h)
     for c in L:
         mainX = (c[0] != 0)
-        cmds = builder.build_railway_segment(c[not mainX], mainX, gBlock, rBlock, placeArrow, r, h)
+        cmds = builder.build_railway_segment(c[not mainX], mainX)
         print('\n'.join(cmds))
         print(base + f" tp ~{c[0]} ~ ~{c[1]}")
     print(f"tag {entity} remove build")
