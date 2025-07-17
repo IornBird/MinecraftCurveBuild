@@ -13,16 +13,17 @@ def get45BzPoints(R=128):
     return (0, 0), (dx + dz, dz)
 
 def main():
-    ## specify position
+    ## specify positions
     a = [0, 0]
     b = [50, 50]
     aDeg = -90
     bDeg = 0
-    ## specify block
+    ## specify block types
     block_for_ground = "quartz_block"
     block_under_rail = "diorite"
-    place_arrow = False
+    ## specify options
     place_rail = True
+    place_arrow = False
     ## select render mode
     dots = render.BZC_ANY(a, b, aDeg, bDeg)
     # dots = render.BZC_R(a, b, xFirst=True)
