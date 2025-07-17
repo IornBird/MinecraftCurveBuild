@@ -26,8 +26,8 @@ Please open `buildMain.py`. adjusting following variables in `main()`
 ```
 a: begin point of the curve
 b: end point of the curve
-aDeg: direction from point a
-bDeg: direction from point b
+aDeg: direction in first step from point a to b
+bDeg: direction in first step from point b to a
 ```
 You can press F3 in Minecraft to find:
 - position in `Block:`
@@ -36,10 +36,10 @@ You can press F3 in Minecraft to find:
 Also, you can specify follwoing block types in `main()`
 ```
 block_for_ground: block used for generate ground
-block_under_rail: block user to put in center
+block_under_rail: block used to put in center
 ```
 If you want to build it for [high-speed rail system by flashteens](https://github.com/flashteens/FTMCRailBuilder13):
-- you may set `place_arrow` to True to handle faster bulletcart.
+- you may set `place_arrow` to `True` to handle faster minecart.
 
 ### Functions
 - `render.BZC_ANY(a, b, aDeg, bDeg)`: Curve begins and ends with any given degrees.
@@ -47,8 +47,8 @@ If you want to build it for [high-speed rail system by flashteens](https://githu
 - `render.BZC_R(a, b, xFirst)`: Curve from a to b. `xFirst=True` means the curve goes first on x-axis direction, before truning to z-axis direction.
 
 ### In Minecraft
-Put the generated `.mcfunction` file in `WORLD\datapacks\AutoBuilder\data\builder\function`, for example.
-> replace `WORLD` to your Minecraft world folder.
+Put the generated `.mcfunction` file in `<WORLD>\datapacks\AutoBuilder\data\builder\function`, for example.
+> replace `<WORLD>` to your Minecraft world folder.
 > 
 > **IMPORTANT**: Ensure your datapack (assume its `AutoBuilder`) has correct structure of your game version.
 
