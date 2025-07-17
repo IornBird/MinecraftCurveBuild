@@ -22,6 +22,7 @@ def main():
     block_for_ground = "quartz_block"
     block_under_rail = "diorite"
     place_arrow = False
+    place_rail = True
     ## select render mode
     dots = render.BZC_ANY(a, b, aDeg, bDeg)
     # dots = render.BZC_R(a, b, xFirst=True)
@@ -29,7 +30,7 @@ def main():
     ## debug
     # print(dots)
 
-    generator.putCmdSingle(dots, block_for_ground, block_under_rail, place_arrow)
+    generator.putCmdSingle(dots, block_for_ground, block_under_rail, place_rail, place_arrow)
 
 def mainHeight():
     L = [round(-15 * (c - 1) / 23 + 85 - 70) for c in range(25)]
