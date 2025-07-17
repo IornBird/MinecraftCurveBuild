@@ -3,6 +3,7 @@ import render
 
 import sys
 
+# in default value, the result is around (91, 38)
 def get45BzPoints(R=128):
     s2 = 2 ** 0.5
     dx = R / (1 + s2)
@@ -12,18 +13,23 @@ def get45BzPoints(R=128):
     return (0, 0), (dx + dz, dz)
 
 def main():
-    # x, y = get45BzPoints(128)  # around (91, 38)
+    ## specify position
     a = [0, 0]
     b = [50, 50]
     aDeg = -90
     bDeg = 0
-
+    ## specify block
+    block_for_ground = "quartz_block"
+    block_under_rail = "diorite"
+    place_arrow = False
+    ## select render mode
     dots = render.BZC_ANY(a, b, aDeg, bDeg)
     # dots = render.BZC_R(a, b, xFirst=True)
     # dots = render.BZC_S(a, b, mainX=False)
+    ## debug
     # print(dots)
 
-    generator.putCmdSingle(dots, "quartz_block", "diorite", True)
+    generator.putCmdSingle(dots, block_for_ground, block_under_rail, place_arrow)
 
 def mainHeight():
     L = [round(-15 * (c - 1) / 23 + 85 - 70) for c in range(25)]
