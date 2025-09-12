@@ -320,14 +320,14 @@ class RailwayBuilder:
             (-xp, -zp)
         ]
         if zp != 0:
-            length = zp * coords.length
+            length = coords.length
             points = [
                 [(zp, -1, zp), (zp, -1, length)],
                 [(-zp, -1, zp), (-zp, -1, length)],
                 [(0, -1, length + zp), (0, -1, length + zp)]
             ]
         else:  # xp != 0
-            length = xp * coords.length
+            length = coords.length
             points = [
                 [(xp, -1, -xp), (length, -1, -xp)],
                 [(xp, -1, xp), (length, -1, xp)],
