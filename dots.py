@@ -57,8 +57,15 @@ class Dot:
     def getDeg(self):
         return deg(math.atan2(-self.x, self.z))
 
+    def getLen(self):
+        return self.dot(self)
+
     def dot(self, other):
         return self.x * other.x + self.z * other.z
+
+    def resize(self, dist=1):
+        L = self.getLen()
+        return self * (dist / L)
 
     def cross(self, other):
         """
@@ -67,12 +74,15 @@ class Dot:
         """
         return self.z * other.x - other.z * self.x
 
+    def toScalar(self):
+        return (self.x, self.z)
+
     def __repr__(self):
         """For debugging, return a string representation of the dot."""
         return f"({self.x}, {self.z})"
 
 
-def dotFromDeg(deg, dist):
+def dotFromDeg(deg, dist=1):
     return Dot(- sinD(deg) * dist, cosD(deg) * dist)
 
 
@@ -85,10 +95,19 @@ def close(p1: Dot, p2: Dot):
     diff = p1 - p2
     return (-1 <= diff.x <= 1) and (-1 <= diff.z <= 1)
 
+def veryClose(p1: Dot, p2: Dot):
+    p1, p2 = p1.round(), p2.round()
+    diff = p1 - p2
+    lim = 1e-6
+    return (-lim <= diff.x <= lim) and (-lim <= diff.z <= lim)
 
 # def changedDir(p1: Dot, p2: Dot):
 #     diffMax = 1e-12
 #     return not (-diffMax < p1.cross(p2) < diffMax)
+
+
+def degDiff(d1, d2):
+    return (d2 - d1 + 180) % 360.0 - 180
 
 
 def changedDir(p1: Dot, p2: Dot):
@@ -96,7 +115,7 @@ def changedDir(p1: Dot, p2: Dot):
         return False
     diffMax = 0.01
     d1, d2 = p1.getDeg(), p2.getDeg()
-    theta = (d2 - d1 + 180) % 360.0 - 180
+    theta = degDiff(d1, d2)
     return not (-diffMax < theta < diffMax)
 
 
@@ -176,10 +195,13 @@ class dotList:
         return ans
 
     def toScalarList(self):
+        """"
+        Returns list with all elements consist of only scalar type
+        """
         ans = []
         ptr = self.head
         while ptr:
-            ans.append((ptr.data.x, ptr.data.z))
+            ans.append(ptr.data.toScalar())
             ptr = ptr.next
         return ans
 
