@@ -223,17 +223,22 @@ class RailwayBuilder:
             ))
         return cmds
 
-    def generate_rail_commands(self, coords: CoordinateCalculator) -> list[str]:
-        points = [
-            coords.setHeight(-1, -1).getCentCoord(),
-            coords.setHeight(0, 0).getCentCoord()
-        ]
-        blocks = [str(self.opt.rBlock), "rail"]
+    def generate_cent_commands(self, coords: CoordinateCalculator) -> list[str]:
+        points = coords.setHeight(-1, -1).getCentCoord()
+        blocks = str(self.opt.rBlock)
         cmds = []
-        for i in range(len(points)):
-            cmds.append(self.cmd_gen.generate_fill_command(
-                *points[i], block=blocks[i]
-            ))
+        cmds.append(self.cmd_gen.generate_fill_command(
+            *points, block=blocks
+        ))
+        return cmds
+
+    def generate_rail_commands(self, coords: CoordinateCalculator) -> list[str]:
+        points = coords.setHeight(0, 0).getCentCoord()
+        blocks = "rail"
+        cmds = []
+        cmds.append(self.cmd_gen.generate_fill_command(
+            *points, block=blocks
+        ))
         return cmds
 
     # public
@@ -250,6 +255,7 @@ class RailwayBuilder:
             cmds.extend(self.generate_arrow_command(coords, (one, 0) if mainX else (0, one)))
         else:
             cmds.extend(self.generate_ground_commands(coords))
+        cmds.extend(self.generate_cent_commands(coords))
         if self.opt.place_rail:
             cmds.extend(self.generate_rail_commands(coords))
         self.prevDir = length
@@ -329,3 +335,4 @@ if __name__ == '__main__':
     opt = BuildOpt(Block("stone"), Block("quartz_block"), place_rail=True, place_arrow=True, wrap=True)
     putCmdSingle([{"test": str(args)}, args], opt)
     # putCmdDouble([{"test": "test"}, args], "stone", "quartz_block", True)
+
