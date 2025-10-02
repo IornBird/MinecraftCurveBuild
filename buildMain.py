@@ -17,8 +17,8 @@ def main():
     ## specify position
     a = [0, 0]
     b = [50, 50]
-    aDeg = -90
-    bDeg = 0
+    aDeg = 0
+    bDeg = 90
 
     ## specify block and option
     block_for_ground = "quartz_block"
@@ -46,4 +46,5 @@ def mainHeight():
 
 if __name__ == '__main__':
     main()
+
 
