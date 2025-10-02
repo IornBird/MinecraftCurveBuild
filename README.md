@@ -26,8 +26,8 @@ Please open `buildMain.py`. adjusting following variables in `main()`
 ```
 a: begin point of the curve
 b: end point of the curve
-aDeg: direction in first step from point a to b
-bDeg: direction in first step from point b to a
+aDeg: direction (in degree or vector) in first step from point a to b
+bDeg: direction (in degree or vector) in first step from point b to a
 ```
 You can press F3 in Minecraft to find:
 - position in `Block:`
@@ -37,6 +37,7 @@ Also, you can specify follwoing block types in `main()`
 ```
 block_for_ground: block used for generate ground
 block_under_rail: block used to put in center
+block_to_wrap: block to be wall and ceiling of tunnel
 ```
 If you want to build it for [high-speed rail system by flashteens](https://github.com/flashteens/FTMCRailBuilder13):
 - you may set `place_arrow` to `True` to handle faster minecart.
