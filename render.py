@@ -42,6 +42,11 @@ def BZC_R(a: list[int], b: list[int], xFirst: bool) -> tuple[dict, list]:
 
 def BZC_ANY(a: list[int], b: list[int], aDeg: float, bDeg: float) -> tuple[dict, list]:
     a, b = Dot(*a), Dot(*b)
+    if isinstance(aDeg, tuple | list):
+        aDeg = Dot(*aDeg).getDeg()
+    if isinstance(bDeg, tuple | list):
+        aDeg = Dot(*bDeg).getDeg()
+
     p = backCal.findIntersect(a, b, aDeg, bDeg)
     if p is None:
         print("wrong direction")
@@ -57,8 +62,8 @@ def BZC_ANY(a: list[int], b: list[int], aDeg: float, bDeg: float) -> tuple[dict,
     assert -1e-12 < math.fabs(m[1][0]) - math.fabs(m[1][1]) < 1e-12
     R = math.fabs(m[1][0])
 
-    cFind = (aDeg - bDeg + 180) % 360.0 - 180
-    cFind = dst * (math.fabs(cFind) + 45) / 270
+    cFind = degDiff(aDeg, bDeg)
+    cFind = dst * (math.fabs(cFind) + 45) / 270  # approx from (90 -> 1/2), (135 -> 2/3)
     c1 = ar.moveFor(aDeg, cFind)
     c2 = br.moveFor(bDeg, cFind)
 
@@ -75,5 +80,31 @@ def BZC_ANY(a: list[int], b: list[int], aDeg: float, bDeg: float) -> tuple[dict,
 
     return (d, pts.getOffset().toScalarList())
 
-def straight_3D(a: list[int], b:list[int]):
+
+def get45BzPoints(R=128):
+    s2 = 2 ** 0.5
+    dx = R / (1 + s2)
+    dz = R / (2 + s2)
+    dx32 = dx * 2/3
+    dz31 = dz / 3
+    return (0, 0), (dx + dz, dz)
+
+
+def getAnyDegPoints(cent=(0, 0), R=128, aDeg=0, bDeg=90):
+    if isinstance(aDeg, tuple | list):
+        aDeg = Dot(*aDeg).getDeg()
+    if isinstance(bDeg, tuple | list):
+        aDeg = Dot(*bDeg).getDeg()
+    theta = degDiff(aDeg, bDeg) / 2
+    V = R / math.tan(rad(theta))
+    V = math.fabs(V)
+    cent = Dot(*cent)
+    a = cent - dotFromDeg(aDeg, V)
+    b = cent - dotFromDeg(bDeg, V)
+    return (a.toScalar(), b.toScalar())
+
+
+def straight_3D(a: list[int], b: list[int]):
     pass
+
+
