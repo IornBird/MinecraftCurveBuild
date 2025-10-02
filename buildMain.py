@@ -1,4 +1,5 @@
 import generator
+from buildOpt import BuildOpt, Block
 import render
 
 import sys
@@ -13,25 +14,31 @@ def get45BzPoints(R=128):
     return (0, 0), (dx + dz, dz)
 
 def main():
-    ## specify positions
+    ## specify position
     a = [0, 0]
     b = [50, 50]
     aDeg = -90
     bDeg = 0
-    ## specify block types
+
+    ## specify block and option
     block_for_ground = "quartz_block"
     block_under_rail = "diorite"
-    ## specify options
+    block_for_wrap = "glass"
+    wrap = True
+    place_arrow = True
     place_rail = True
-    place_arrow = False
+
     ## select render mode
     dots = render.BZC_ANY(a, b, aDeg, bDeg)
-    # dots = render.BZC_R(a, b, xFirst=True)
+    # dots = render.BZC_R(a, b, xFirst=(v[0] < 1100))
     # dots = render.BZC_S(a, b, mainX=False)
+    
     ## debug
     # print(dots)
 
-    generator.putCmdSingle(dots, block_for_ground, block_under_rail, place_rail, place_arrow)
+    option = BuildOpt(gBlock=Block(block_for_ground), rBlock=Block(block_under_rail), wBlock=Block(block_for_wrap),
+                      wrap=wrap, place_arrow=place_arrow, place_rail=place_rail)
+    generator.putCmdSingle(dots, option)
 
 def mainHeight():
     L = [round(-15 * (c - 1) / 23 + 85 - 70) for c in range(25)]
@@ -39,3 +46,4 @@ def mainHeight():
 
 if __name__ == '__main__':
     main()
+
